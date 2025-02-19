@@ -1,0 +1,32 @@
+using System;
+
+class Produto
+{
+    public string Nome { get; set; }
+    public double PrecoUnitario { get; set; }
+    public int Quantidade { get; set; }
+
+    public Produto(string nome, double precoUnitario, int quantidade)
+    {
+        Nome = nome;
+        PrecoUnitario = precoUnitario;
+        Quantidade = quantidade;
+    }
+
+    public double CalcularValorTotal()
+    {
+        return PrecoUnitario * Quantidade;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Produto produto = new Produto("Camiseta", 29.99, 4);
+        Console.WriteLine($"Produto: {produto.Nome}");
+        Console.WriteLine($"Preço Unitário: {produto.PrecoUnitario}");
+        Console.WriteLine($"Quantidade: {produto.Quantidade}");
+        Console.WriteLine($"Valor Total: {produto.CalcularValorTotal()}");
+    }
+}
