@@ -1,0 +1,19 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int maior = 0;
+        int[] numeros = {1, 2, 3, 4, 5};
+        foreach (int i in numeros)
+        {
+            Console.WriteLine(i);
+            if (i > maior)
+            {
+                maior = i;
+            }
+        }
+        Console.WriteLine("O maior número é: " + maior);
+    }
+}
