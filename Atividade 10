@@ -1,0 +1,69 @@
+using System;
+
+class Livro
+{
+    public string Titulo { get; set; }
+    public bool Emprestado { get; private set; }
+
+    public Livro(string titulo)
+    {
+        Titulo = titulo;
+        Emprestado = false;
+    }
+
+    // Método para verificar se o livro está disponível para empréstimo
+    public bool DisponivelParaEmprestimo()
+    {
+        return !Emprestado;
+    }
+
+    // Método para realizar o empréstimo do livro
+    public void RealizarEmprestimo()
+    {
+        if (DisponivelParaEmprestimo())
+        {
+            Emprestado = true;
+            Console.WriteLine($"O livro \"{Titulo}\" foi emprestado com sucesso.");
+        }
+        else
+        {
+            Console.WriteLine($"O livro \"{Titulo}\" não está disponível para empréstimo.");
+        }
+    }
+
+    // Método opcional para devolver o livro
+    public void DevolverLivro()
+    {
+        if (Emprestado)
+        {
+            Emprestado = false;
+            Console.WriteLine($"O livro \"{Titulo}\" foi devolvido com sucesso.");
+        }
+        else
+        {
+            Console.WriteLine($"O livro \"{Titulo}\" não estava emprestado.");
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Livro livro = new Livro("C# para Iniciantes");
+
+        Console.WriteLine($"Livro: {livro.Titulo}");
+        Console.WriteLine("Disponível para empréstimo? " + (livro.DisponivelParaEmprestimo() ? "Sim" : "Não"));
+
+        // Realizando o empréstimo
+        livro.RealizarEmprestimo();
+        Console.WriteLine("Disponível para empréstimo? " + (livro.DisponivelParaEmprestimo() ? "Sim" : "Não"));
+
+        // Tentativa de realizar um novo empréstimo (não disponível)
+        livro.RealizarEmprestimo();
+
+        // Devolvendo o livro e realizando novo empréstimo
+        livro.DevolverLivro();
+        livro.RealizarEmprestimo();
+    }
+}
