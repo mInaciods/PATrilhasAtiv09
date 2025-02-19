@@ -1,0 +1,16 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int media = 0;
+        int[] numeros = {1, 2, 3, 4, 5};
+            foreach (int i in numeros)
+            {
+            Console.WriteLine(i);
+                media = media + i;
+            }
+        Console.WriteLine("A média é: " + media/numeros.Length);
+    }
+}
