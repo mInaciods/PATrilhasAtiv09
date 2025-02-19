@@ -1,137 +1,46 @@
 using System;
 
-class Conta
+class Calculadora 
 {
-    public int Numero { get; }
-    public string Titular { get; }
-    public double Saldo { get; set; }
-    public Boolean Status { get ; private set;}
-
-    public Conta(int numero, string titular)
-    {
-        Numero = numero;
-        Titular = titular;
-        Saldo = 0;
-        Status = true;
-    }
-
-    public void Deposito(double valor){
-        Console.Clear();
-        if (valor > 0){
-            Saldo += valor;
-            Console.WriteLine("\n\nValor do saldo atual: " + Saldo);
-        } else {
-             Console.WriteLine("\n\nValor de depósito inválido.");
-        }
-    }
-
-    public void Saque(int num){
-        Console.Clear();
-        Console.WriteLine("\n\nValor do saldo atual: " + Saldo);
-        if (num > 0 && num <= Saldo){
-            Saldo -= num;
-            Console.WriteLine($"\n\nSaque de {num} realizado. Novo saldo: {Saldo}");
-        } else {
-            Console.WriteLine("\n\nValor de saque inválido.");
-        }
-    }
-
-    public void encerraConta(){
-        Console.Clear();
-        if(Saldo != 0){
-            Console.WriteLine("\n\nZere o saldo para encerrar a conta");
-        } else {
-            Status = false;
-            Console.WriteLine("\n\nConta encerrada com sucesso.");
-        }
-    }
+    public int Somar(int a, int b) 
+    {
+        return a + b;
+    }
+    public int Subtrair(int a, int b)
+    {
+        return a - b;
+    }
+    public int Multiplicar(int a, int b)
+    {
+        return a * b;
+    }
+    public float Dividir(float a, float b)
+    {
+        return a / b;
+    }
 }
-
-class Banco
-{
-    private Conta conta;
-
-    public void AbrirConta(int numero, string titular)
-    {
-        Console.Clear();
-        if (conta != null && conta.Status)
-        {
-            Console.WriteLine("\n\nJá existe uma conta ativa.");
-        }
-        else
-        {
-            conta = new Conta(numero, titular);
-            Console.WriteLine("\n\nConta aberta com sucesso!");
-        }
-    }
-
-    public void Depositar(double valor){
-        if (conta != null && conta.Status){
-            conta.Deposito(valor);
-        }
-    }
-
-    public void Sacar(int valor){
-        if (conta != null && conta.Status){
-            conta.Saque(valor);
-        } else {
-            Console.WriteLine("\n\nNão é possível sacar. Conta inativa.");
-        }
-    }
-    public void EncerrarConta(){
-        if (conta != null && conta.Status){
-            conta.encerraConta();
-        } else {
-            Console.WriteLine("\n\nNão é possível encerrar a conta. Conta inativa.");
-        }
-    }
-}
-
 
 class Program
 {
-    static void Main()
-    {
-        Banco banco = new Banco();
-        while (true){
-            Console.WriteLine("\n\nEscolha a opção desejada:");
-            Console.WriteLine("1 - Abrir conta");
-            Console.WriteLine("2 - Depositar");
-            Console.WriteLine("3 - Sacar");
-            Console.WriteLine("4 - Encerrar conta");
-            Console.WriteLine("5 - Sair");
+    static void Main()
+    {
+        Calculadora calc = new Calculadora();
+        Console.Write("Digite o primeiro número:");
+        int num1 = int.Parse(Console.ReadLine());
+        Console.Write("\nDigite o segundo número:");
+        int num2 = int.Parse(Console.ReadLine());
+        
+        int resultadosoma = calc.Somar(num1, num2);
+        Console.WriteLine("\nResultado da soma entre {0} e {1} : {2}", num1 , num2, resultadosoma);
 
-            int opcao = int.Parse(Console.ReadLine());
-            switch (opcao) {
-                case 1: 
-                    Console.WriteLine("\nDigite o número da conta:");
-                    int numero = int.Parse(Console.ReadLine());
-                    Console.WriteLine("\nDigite o nome do titular:");
-                    string titular = Console.ReadLine();
-                    banco.AbrirConta(numero, titular);
-                break;
+        int resultadosub = calc.Subtrair(num1, num2);
+        Console.WriteLine("\nResultado da subtração entre {0} e {1} : {2}", num1 , num2, resultadosub);
 
-                case 2:
-                    Console.WriteLine("\nDigite o valor do depósito:");
-                    double valor = double.Parse(Console.ReadLine());
-                    banco.Depositar(valor);
-                break;
+        int resultadomult = calc.Multiplicar(num1, num2);
+        Console.WriteLine("\nResultado da multiplicação entre {0} e {1} : {2}", num1 , num2, resultadomult);
 
-                case 3:
-                    Console.WriteLine("\nDigite o valor do saque:");
-                    int valorSaque = int.Parse(Console.ReadLine());
-                    banco.Sacar(valorSaque);
-                break;
-                case 4:
-                    banco.EncerrarConta();
-                break;
-                case 5:
-                    Console.WriteLine("\nSaindo do programa.");
-                    return;
-                default:
-                    Console.WriteLine("\nOpção inválida.");
-                break;
-            }
-        }
-    }
+        float resultadodiv = calc.Dividir(num1, num2);
+        Console.WriteLine("\nResultado da divisão entre {0} e {1} : {2}", num1 , num2, resultadodiv);
+        
+    }
 }
