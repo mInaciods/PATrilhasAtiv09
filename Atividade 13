@@ -1,0 +1,72 @@
+using System;
+
+class Triangulo
+{
+    public double Lado1 { get; set; }
+    public double Lado2 { get; set; }
+    public double Lado3 { get; set; }
+
+    public Triangulo(double lado1, double lado2, double lado3)
+    {
+        // Verifica se os lados fornecidos formam um triângulo válido
+        if (!EhTriangulo(lado1, lado2, lado3))
+            throw new ArgumentException("Os lados fornecidos não formam um triângulo válido.");
+        
+        Lado1 = lado1;
+        Lado2 = lado2;
+        Lado3 = lado3;
+    }
+
+    // Método privado que verifica a validade do triângulo
+    private bool EhTriangulo(double a, double b, double c)
+    {
+        return (a + b > c) && (a + c > b) && (b + c > a);
+    }
+
+    // Verifica se o triângulo é equilátero: todos os lados iguais
+    public bool Equilatero()
+    {
+        return Lado1 == Lado2 && Lado2 == Lado3;
+    }
+
+    // Verifica se o triângulo é isósceles: dois lados iguais (mas não todos)
+    public bool Isosceles()
+    {
+        return (Lado1 == Lado2 || Lado1 == Lado3 || Lado2 == Lado3) && !Equilatero();
+    }
+
+    // Verifica se o triângulo é escaleno: todos os lados diferentes
+    public bool Escaleno()
+    {
+        return Lado1 != Lado2 && Lado1 != Lado3 && Lado2 != Lado3;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        // Exemplo 1: Triângulo Equilátero
+        Triangulo triangulo1 = new Triangulo(5, 5, 5);
+        Console.WriteLine("Triângulo 1:");
+        Console.WriteLine("Equilátero? " + (triangulo1.Equilatero() ? "Sim" : "Não"));
+        Console.WriteLine("Isósceles? " + (triangulo1.Isosceles() ? "Sim" : "Não"));
+        Console.WriteLine("Escaleno? " + (triangulo1.Escaleno() ? "Sim" : "Não"));
+        Console.WriteLine();
+
+        // Exemplo 2: Triângulo Isósceles
+        Triangulo triangulo2 = new Triangulo(5, 5, 7);
+        Console.WriteLine("Triângulo 2:");
+        Console.WriteLine("Equilátero? " + (triangulo2.Equilatero() ? "Sim" : "Não"));
+        Console.WriteLine("Isósceles? " + (triangulo2.Isosceles() ? "Sim" : "Não"));
+        Console.WriteLine("Escaleno? " + (triangulo2.Escaleno() ? "Sim" : "Não"));
+        Console.WriteLine();
+
+        // Exemplo 3: Triângulo Escaleno
+        Triangulo triangulo3 = new Triangulo(3, 4, 5);
+        Console.WriteLine("Triângulo 3:");
+        Console.WriteLine("Equilátero? " + (triangulo3.Equilatero() ? "Sim" : "Não"));
+        Console.WriteLine("Isósceles? " + (triangulo3.Isosceles() ? "Sim" : "Não"));
+        Console.WriteLine("Escaleno? " + (triangulo3.Escaleno() ? "Sim" : "Não"));
+    }
+}
