@@ -1,0 +1,92 @@
+using System;
+
+class Produto
+{
+    public string Nome { get; set; }
+    public double Preco { get; set; }
+    public int Quantidade { get; set; }
+
+    public Produto(string nome, double preco, int quantidade)
+    {
+        Nome = nome;
+        Preco = preco;
+        Quantidade = quantidade;
+    }
+
+    public override string ToString()
+    {
+        return "Produto: " + Nome + ", Preço: " + Preco + ", Quantidade: " + Quantidade;
+    }
+}
+
+class CarrinhoDeCompras
+{
+    private Produto[] produtos;
+    private int count;
+
+    public CarrinhoDeCompras()
+    {
+        // Inicializa o array com capacidade para 10 produtos
+        produtos = new Produto[10];
+        count = 0;
+    }
+
+    // Método para adicionar um produto ao carrinho
+    public void AdicionarProduto(Produto produto)
+    {
+        // Verifica se o array precisa ser redimensionado
+        if (count >= produtos.Length)
+        {
+            Produto[] novoArray = new Produto[produtos.Length * 2];
+            for (int i = 0; i < produtos.Length; i++)
+            {
+                novoArray[i] = produtos[i];
+            }
+            produtos = novoArray;
+        }
+
+        produtos[count] = produto;
+        count++;
+        Console.WriteLine("Produto adicionado: " + produto.Nome);
+    }
+
+    // Método para calcular o valor total da compra
+    public double CalcularValorTotal()
+    {
+        double total = 0;
+        for (int i = 0; i < count; i++)
+        {
+            total += produtos[i].Preco * produtos[i].Quantidade;
+        }
+        return total;
+    }
+
+    // Método para exibir os itens do carrinho
+    public void ExibirItens()
+    {
+        Console.WriteLine("Itens no carrinho:");
+        for (int i = 0; i < count; i++)
+        {
+            Console.WriteLine(produtos[i]);
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        CarrinhoDeCompras carrinho = new CarrinhoDeCompras();
+
+        // Adicionando produtos ao carrinho
+        carrinho.AdicionarProduto(new Produto("Camisa", 39.90, 2));
+        carrinho.AdicionarProduto(new Produto("Calça", 79.90, 1));
+        carrinho.AdicionarProduto(new Produto("Tênis", 129.90, 1));
+
+        Console.WriteLine();
+        carrinho.ExibirItens();
+
+        Console.WriteLine();
+        Console.WriteLine("Valor total da compra: " + carrinho.CalcularValorTotal());
+    }
+}
