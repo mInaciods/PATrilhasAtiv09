@@ -1,0 +1,68 @@
+using System;
+
+class ContaBancaria
+{
+    public string Titular { get; set; }
+    public double Saldo { get; private set; }
+
+    public ContaBancaria(string titular, double saldoInicial = 0)
+    {
+        Titular = titular;
+        Saldo = saldoInicial;
+    }
+
+    public void Depositar(double valor)
+    {
+        if (valor > 0)
+        {
+            Saldo += valor;
+            Console.WriteLine($"Depósito de {valor} realizado com sucesso.");
+        }
+        else
+        {
+            Console.WriteLine("O valor do depósito deve ser maior que zero.");
+        }
+    }
+
+    public void Sacar(double valor)
+    {
+        if (valor <= 0)
+        {
+            Console.WriteLine("O valor do saque deve ser maior que zero.");
+        }
+        else if (valor > Saldo)
+        {
+            Console.WriteLine("Saldo insuficiente para o saque.");
+        }
+        else
+        {
+            Saldo -= valor;
+            Console.WriteLine($"Saque de {valor} realizado com sucesso.");
+        }
+    }
+
+    public double VerificarSaldo()
+    {
+        return Saldo;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        ContaBancaria conta = new ContaBancaria("Maria", 500);
+
+        Console.WriteLine($"Titular: {conta.Titular}");
+        Console.WriteLine($"Saldo Inicial: {conta.VerificarSaldo()}");
+
+        conta.Depositar(200);
+        Console.WriteLine($"Saldo após depósito: {conta.VerificarSaldo()}");
+
+        conta.Sacar(100);
+        Console.WriteLine($"Saldo após saque: {conta.VerificarSaldo()}");
+
+        conta.Sacar(1000); // Tentativa de saque com saldo insuficiente
+        Console.WriteLine($"Saldo final: {conta.VerificarSaldo()}");
+    }
+}
