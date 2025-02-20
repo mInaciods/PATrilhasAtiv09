@@ -1,0 +1,147 @@
+using System;
+
+class Contato
+{
+    public string Nome { get; set; }
+    public string Telefone { get; set; }
+
+    public Contato(string nome, string telefone)
+    {
+        Nome = nome;
+        Telefone = telefone;
+    }
+
+    public override string ToString()
+    {
+        return "Nome: " + Nome + ", Telefone: " + Telefone;
+    }
+}
+
+class Agenda
+{
+    private Contato[] contatos;
+    private int count;
+
+    public Agenda()
+    {
+        // Inicializa o array com capacidade para 10 contatos
+        contatos = new Contato[10];
+        count = 0;
+    }
+
+    // Método para adicionar um contato à agenda
+    public void AdicionarContato(Contato contato)
+    {
+        // Verifica se o array precisa ser redimensionado
+        if (count >= contatos.Length)
+        {
+            // Cria um novo array com o dobro da capacidade
+            Contato[] novoArray = new Contato[contatos.Length * 2];
+            for (int i = 0; i < contatos.Length; i++)
+            {
+                novoArray[i] = contatos[i];
+            }
+            contatos = novoArray;
+        }
+
+        contatos[count] = contato;
+        count++;
+        Console.WriteLine("Contato adicionado: " + contato.Nome);
+    }
+
+    // Método para remover contato(s) pelo nome (removendo todos que correspondam)
+    public void RemoverContato(string nome)
+    {
+        int removidos = 0;
+        for (int i = 0; i < count; i++)
+        {
+            if (contatos[i].Nome.ToLower() == nome.ToLower())
+            {
+                // Remove o contato deslocando os elementos à esquerda
+                for (int j = i; j < count - 1; j++)
+                {
+                    contatos[j] = contatos[j + 1];
+                }
+                count--;
+                i--; // Ajusta o índice para verificar a nova posição
+                removidos++;
+            }
+        }
+        if (removidos > 0)
+        {
+            Console.WriteLine(removidos + " contato(s) removido(s) com o nome " + nome);
+        }
+        else
+        {
+            Console.WriteLine("Nenhum contato encontrado com o nome " + nome);
+        }
+    }
+
+    // Método para buscar contatos cujo nome contenha o termo informado
+    public Contato[] BuscarContatoPorNome(string nome)
+    {
+        // Conta quantos contatos correspondem à busca
+        int totalEncontrados = 0;
+        for (int i = 0; i < count; i++)
+        {
+            if (contatos[i].Nome.ToLower().Contains(nome.ToLower()))
+            {
+                totalEncontrados++;
+            }
+        }
+        // Cria um array do tamanho exato dos contatos encontrados
+        Contato[] encontrados = new Contato[totalEncontrados];
+        int indice = 0;
+        for (int i = 0; i < count; i++)
+        {
+            if (contatos[i].Nome.ToLower().Contains(nome.ToLower()))
+            {
+                encontrados[indice] = contatos[i];
+                indice++;
+            }
+        }
+        return encontrados;
+    }
+
+    // Método auxiliar para listar todos os contatos da agenda
+    public void ListarContatos()
+    {
+        Console.WriteLine("Lista de contatos:");
+        for (int i = 0; i < count; i++)
+        {
+            Console.WriteLine(contatos[i]);
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Agenda agenda = new Agenda();
+
+        // Adicionando contatos
+        agenda.AdicionarContato(new Contato("João Silva", "1234-5678"));
+        agenda.AdicionarContato(new Contato("Maria Souza", "2345-6789"));
+        agenda.AdicionarContato(new Contato("Joana Lima", "3456-7890"));
+
+        Console.WriteLine();
+        agenda.ListarContatos();
+
+        Console.WriteLine();
+        // Buscando contatos que contenham "Jo" no nome
+        Console.WriteLine("Buscando contatos com 'Jo':");
+        Contato[] encontrados = agenda.BuscarContatoPorNome("Jo");
+        for (int i = 0; i < encontrados.Length; i++)
+        {
+            Console.WriteLine(encontrados[i]);
+        }
+
+        Console.WriteLine();
+        // Removendo contato
+        agenda.RemoverContato("João Silva");
+
+        Console.WriteLine();
+        agenda.ListarContatos();
+    }
+}
